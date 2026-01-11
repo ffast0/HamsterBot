@@ -5,9 +5,11 @@ import TelegramBot from "node-telegram-bot-api";
 dotenv.config();
 
 const token = process.env.TOKEN_APII;
+
+// Botni webhook rejimida yaratamiz
 const bot = new TelegramBot(token, { webHook: true });
 
-// Webhook URL ni to‘g‘ri o‘rnat
+// Webhook URL ni o‘rnatamiz
 bot.setWebHook(`https://hamster-bot-kappa.vercel.app/api/bot`);
 
 const app = express();
@@ -18,7 +20,7 @@ app.get("/", (req, res) => {
   res.send("🐹 Hamster Tapper bot is running on Vercel!");
 });
 
-// Webhook endpoint
+// Webhook endpoint — bu yerda bot.processUpdate chaqiriladi
 app.post("/api/bot", (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
