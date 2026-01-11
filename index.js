@@ -41,7 +41,7 @@ bot.onText(/\/score/, (msg) => {
   bot.sendMessage(chatId, `📊 Sizning umumiy ballingiz: ${score}`);
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
