@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 // Webhook endpoint (api/ bilan boshlanadi)
-app.post(`/api/bot${token}`, (req, res) => {
+app.post("/api/bot", (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
