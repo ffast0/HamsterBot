@@ -4,11 +4,16 @@ import TelegramBot from "node-telegram-bot-api";
 
 dotenv.config();
 
-const token = process.env.TOKEN_APII; // Vercel’da TOKEN_APII deb qo‘ygan bo‘lsang
+const token = process.env.TOKEN_APII;
 const bot = new TelegramBot(token);
 
 const app = express();
 app.use(express.json());
+
+// Root route (test uchun)
+app.get("/", (req, res) => {
+  res.send("🐹 Hamster Tapper bot is running on Vercel!");
+});
 
 // Webhook endpoint (api/ bilan boshlanadi)
 app.post(`/api/bot${token}`, (req, res) => {
