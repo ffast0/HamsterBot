@@ -4,23 +4,20 @@ import TelegramBot from "node-telegram-bot-api";
 
 dotenv.config();
 
-const token = process.env.TOKEN_APII;
-const bot = new TelegramBot(token, { polling: true });
+const token = process.env.TOKEN_APII; // Vercel’da shunday nom qo‘ygan bo‘lsang
+const bot = new TelegramBot(token);
 
 const app = express();
 app.use(express.json());
 
+// Webhook endpoint
+app.post(`/bot${token}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+// Hamster Tapper logikasi
 const scores = {};
-
-app.get("/", (req, res) => {
-  res.send("Hamster Tapper backend is running!");
-});
-
-app.get("/score/:chatId", (req, res) => {
-  const chatId = req.params.chatId;
-  const score = scores[chatId] || 0;
-  res.json({ chatId, score });
-});
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
@@ -41,7 +38,4 @@ bot.onText(/\/score/, (msg) => {
   bot.sendMessage(chatId, `📊 Sizning umumiy ballingiz: ${score}`);
 });
 
-const PORT = process.env.PORT ;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+export default app;
