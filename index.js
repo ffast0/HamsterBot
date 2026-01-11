@@ -4,14 +4,14 @@ import TelegramBot from "node-telegram-bot-api";
 
 dotenv.config();
 
-const token = process.env.TOKEN_APII; // Vercel’da shunday nom qo‘ygan bo‘lsang
+const token = process.env.TOKEN_APII; // Vercel’da TOKEN_APII deb qo‘ygan bo‘lsang
 const bot = new TelegramBot(token);
 
 const app = express();
 app.use(express.json());
 
-// Webhook endpoint
-app.post(`/bot${token}`, (req, res) => {
+// Webhook endpoint (api/ bilan boshlanadi)
+app.post(`/api/bot${token}`, (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
